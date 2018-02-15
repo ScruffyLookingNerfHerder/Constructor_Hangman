@@ -13,8 +13,8 @@ function letter (lttr) {
       if (this.letters.show === false) {
         return ' _ '
 
-      } else if (this.letters.show === true) {
-        return this.letters
+      } else if (this.letters.show == true) {
+        return this.letter
       }
     }
 }
