@@ -12,7 +12,7 @@ var losses = 0;
 //uses math.random to choose a word from the word bank and then uppercases it (looks better)
 function chooseword() {
   chosenword = possiblewords[Math.floor(Math.random() * possiblewords.length)].toUpperCase();
-  console.log(chosenword); //for testing
+  console.log(chosenword);
 }
 
 //prompt whether or not to play the game
@@ -114,7 +114,7 @@ function game() {
   remainingletters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
   //set guessed letters to empty array
   guessedletters = [];
-  console.log("Guessed letters" + remainingletters.join(","));
+
   // console.log("Alphabet Var (shouldn't change)" + alphabet.join(","));
   console.log("Welcome to Lord of the Rings Hangman. You have 10 guesses, your word is below. Good Luck!");
   //run initial guess function
@@ -153,16 +153,19 @@ function game() {
           guessedletters.push(removed);
         }
       }
-      //only run as long as guesses are greater than 1 (using this as guesses>0 still gave the user a guess on 0, which I did not like)
-      if (guesses > 1 && iswin() != true) {
+      //only run as long as guesses are greater than 1 (using this as guesses>0 still gave the user a guess on 0, which I did not like) guesses > 1 && compare() != false
+      if (iswin() === true) {
+        target.appear();
+        wins++;
+        gameprompter();
+      } else if (guesses > 1 && compare() != false) {
+        guess();
+      } else if (guesses > 1 && iswin() != true){
         guesses--;
         guess();
       } else if (guesses === 1 && iswin() != true) {
         target.appear();
         losses++;
-        gameprompter();
-      } else {
-        target.appear();
         gameprompter();
       }
     });
@@ -170,15 +173,18 @@ function game() {
 }
 
 function compare() {
+  var correct=0;
   for (var j = 0; j < target.letters.length; j++) {
 
     if (letterguessed === target.letters[j].letter) {
       target.letters[j].show = true;
-
+      correct++;
       // console.log(target);
     }
   }
-
+  if(correct == 0){
+    return false;
+  }
 }
 
 function iswin() {
@@ -190,7 +196,7 @@ function iswin() {
   }
 
   if (comparearray.length == target.letters.length) {
-    wins++;
+
     return true;
   }
 }
