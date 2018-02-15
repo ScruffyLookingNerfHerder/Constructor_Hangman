@@ -12,7 +12,7 @@ var losses = 0;
 //uses math.random to choose a word from the word bank and then uppercases it (looks better)
 function chooseword() {
   chosenword = possiblewords[Math.floor(Math.random() * possiblewords.length)].toUpperCase();
-  console.log(chosenword);
+  
 }
 
 //prompt whether or not to play the game
@@ -166,6 +166,7 @@ function game() {
       } else if (guesses === 1 && iswin() != true) {
         target.appear();
         losses++;
+        console.log("oooohh! Tough break. Your word was " + chosenword + ". Better luck next time!")
         gameprompter();
       }
     });
